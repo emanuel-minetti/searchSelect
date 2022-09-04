@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Select</title>
+    <link rel="stylesheet" href="css/vendor/bootstrap.css">
+</head>
+<body>
+<form method="post" href="index.html">
+    <div class="mb-3" id="selectDiv">
+        <label for="selectInputElm" class="form-label">Please choose a chapter:</label>
+        <input type="text" class="form-control search-select-name" id="selectInputElm" autocomplete="off">
+        <input type="hidden" class="search-select-value" name="dropdownValueId">
+        <div class="dropdown">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            </ul>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
+</body>
+<script src="js/vendor/bootstrap.bundle.js"></script>
+<script>
+    const dropdownItems = [
+        {value: 1, name: 'Erstes', id: 'item1'},
+        {value: 2, name: 'Zweites', id: 'item2'},
+        {value: 3, name: 'Drittes', id: 'item3'},
+        {value: 4, name: 'Viertes', id: 'item4'},
+        {value: 5, name: 'Fünftes', id: 'item5'},
+        {value: 6, name: 'Sechstes', id: 'item6'},
+        {value: 7, name: 'Siebtes', id: 'item7'},
+    ];
+</script>
+<script src="js/searchSelect.js"></script>
+</html>
