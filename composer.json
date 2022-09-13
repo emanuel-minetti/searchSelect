@@ -2,7 +2,7 @@
   "name": "emanuel-minetti/search-select",
   "description": "A small JS Function to make Html Select Elements searchable",
   "minimum-stability": "stable",
-  "license": "mit",
+  "license": "MIT",
   "authors": [
     {
       "name": "Emanuel Minetti",
@@ -10,6 +10,7 @@
     }
   ],
   "require": {
+    "php": ">=7.3",
     "twbs/bootstrap": "^v5.0.2"
   }
 }
