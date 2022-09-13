@@ -1,0 +1,15 @@
+{
+  "name": "emanuel-minetti/search-select",
+  "description": "A small JS Function to make Html Select Elements searchable",
+  "minimum-stability": "stable",
+  "license": "mit",
+  "authors": [
+    {
+      "name": "Emanuel Minetti",
+      "email": "e.minetti@posteo.de"
+    }
+  ],
+  "require": {
+    "twbs/bootstrap": "^v5.0.2"
+  }
+}
