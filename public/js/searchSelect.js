@@ -1,8 +1,3 @@
-window.onload = () => {
-    const selectDivs = document.getElementsByClassName('search-select-div');
-    Array.from(selectDivs).forEach(div => makeSearchable(div));
-};
-
 function makeSearchable(selectDiv) {
     const selectElem = selectDiv.getElementsByTagName('select').item(0);
     selectElem.hidden = true;
