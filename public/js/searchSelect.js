@@ -49,4 +49,5 @@ function makeSearchable(selectDiv) {
         ).forEach(item => liCollection.namedItem(item.id).hidden = true);
     });
     selectElem.remove();
+
 }
