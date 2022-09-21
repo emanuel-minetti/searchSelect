@@ -34,6 +34,10 @@ function makeSearchable(selectDiv) {
             inputHiddenElem.value = option.value;
             dropdownUl.classList.remove('show');
         });
+        if (option.selected === true) {
+            inputTextElm.value = option.innerText;
+            inputHiddenElem.value = option.value;
+        }
         dropdownLiArray.push(liElem);
     });
     document.addEventListener('click', evt => {
