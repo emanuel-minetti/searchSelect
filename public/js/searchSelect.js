@@ -1,6 +1,19 @@
+/**
+ * Makes a select searchable.
+ *
+ * Expects a HTMLDivElement that contains exactly one label and one select element.
+ * As usual the name of the select element will be the name in post data.
+ * The select element should have a (unique) id attribute.
+ *
+ * @param selectDiv
+ */
+
 function makeSearchable(selectDiv) {
+    // hide the select element
     const selectElem = selectDiv.getElementsByTagName('select').item(0);
     selectElem.hidden = true;
+
+    // create the substituting elements, e.g. input and dropdown
     const inputTextElm = document.createElement('input');
     inputTextElm.type = 'text';
     inputTextElm.classList.add('form-control');
@@ -17,34 +30,36 @@ function makeSearchable(selectDiv) {
     dropdownDiv.insertAdjacentElement('beforeend', dropdownUl);
     selectDiv.insertAdjacentElement('beforeend', dropdownDiv);
     inputTextElm.value = '';
-    inputTextElm.addEventListener('click', () => {
-        dropdownUl.classList.contains('show') ?
-            dropdownUl.classList.remove('show') :
-            dropdownUl.classList.add('show');
-    });
+
+    // populate the dropdown
     const dropdownLiArray = [];
     Array.from(selectElem.options).forEach(option => {
         const liElem = document.createElement('li');
         liElem.id = selectElem.id + option.value;
+        liElem.dataset.value = option.value;
         liElem.innerText = option.innerText;
         liElem.classList.add('dropdown-item');
         dropdownUl.insertAdjacentElement('beforeend', liElem);
         liElem.addEventListener('click', () => {
-            inputTextElm.value = liElem.innerText;
-            inputHiddenElem.value = option.value;
-            dropdownUl.classList.remove('show');
+            chooseValue(liElem);
         });
         if (option.selected === true) {
-            inputTextElm.value = option.innerText;
-            inputHiddenElem.value = option.value;
+            chooseValue(liElem);
         }
         dropdownLiArray.push(liElem);
+    });
+
+    // event listeners
+    //      show/hide dropdown
+    inputTextElm.addEventListener('click', () => {
+        toggleDropdown();
     });
     document.addEventListener('click', evt => {
         if (!dropdownLiArray.find(liElm => liElm === evt.target || inputTextElm === evt.target)) {
             dropdownUl.classList.remove('show');
         }
     });
+    //      filter dropdown
     const liCollection = dropdownUl.getElementsByTagName('li');
     inputTextElm.addEventListener('input', () => {
         dropdownLiArray.forEach(item => item.hidden = false);
@@ -52,6 +67,23 @@ function makeSearchable(selectDiv) {
             !liElm.innerText.toLowerCase().includes(inputTextElm.value.toLowerCase())
         ).forEach(item => liCollection.namedItem(item.id).hidden = true);
     });
+
+    // helpers
+    function toggleDropdown() {
+        if (dropdownUl.classList.contains('show')) {
+            dropdownUl.classList.remove('show');
+        } else {
+            dropdownUl.classList.add('show');
+            inputTextElm.select();
+        }
+    }
+    function chooseValue(liElem) {
+        inputTextElm.value = liElem.innerText;
+        inputHiddenElem.value = liElem.dataset.value;
+        dropdownUl.classList.remove('show');
+    }
+
+    // remove the select element from dom
     selectElem.remove();
 
 }
