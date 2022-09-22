@@ -102,9 +102,10 @@ function makeSearchable(selectDiv) {
         }
     }
     function hideDropdown() {
-        if (dropdownLiArray.find(liElem => {
+        const chosenLiElem = dropdownLiArray.find(liElem => {
             return liElem.innerText === inputTextElm.value;
-        }) === undefined) {
+        });
+        if (chosenLiElem === undefined) {
             let firstLiElem;
             if (dropdownUl.classList.contains('show')) {
                 const shownLiElems = dropdownLiArray.filter(liElem => !liElem.hidden);
@@ -124,6 +125,8 @@ function makeSearchable(selectDiv) {
             }
             inputTextElm.value = firstLiElem.innerText;
             inputHiddenElem.value = firstLiElem.value;
+        } else {
+            chooseValue(chosenLiElem);
         }
         dropdownUl.classList.remove('show');
         filterDropdown();
