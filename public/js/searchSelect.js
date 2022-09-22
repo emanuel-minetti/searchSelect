@@ -50,40 +50,100 @@ function makeSearchable(selectDiv) {
     });
 
     // event listeners
-    //      show/hide dropdown
     inputTextElm.addEventListener('click', () => {
         toggleDropdown();
     });
     document.addEventListener('click', evt => {
         if (!dropdownLiArray.find(liElm => liElm === evt.target || inputTextElm === evt.target)) {
-            dropdownUl.classList.remove('show');
+            hideDropdown();
         }
     });
-    //      filter dropdown
-    const liCollection = dropdownUl.getElementsByTagName('li');
     inputTextElm.addEventListener('input', () => {
-        dropdownLiArray.forEach(item => item.hidden = false);
-        dropdownLiArray.filter(liElm =>
-            !liElm.innerText.toLowerCase().includes(inputTextElm.value.toLowerCase())
-        ).forEach(item => liCollection.namedItem(item.id).hidden = true);
+        filterDropdown();
+    });
+    inputTextElm.addEventListener('keydown', evt => {
+        if (evt.key === "Enter") {
+            hideDropdown();
+        } else if ((evt.key === "ArrowUp" || evt.key === "ArrowDown") &&
+            dropdownUl.classList.contains('show')) {
+            const shownLiElems = dropdownLiArray.filter(liElem => !liElem.hidden);
+            const activeIndex = shownLiElems.findIndex(liElem => liElem.classList.contains('active'));
+            if (evt.key === "ArrowDown") {
+                if (activeIndex === -1) {
+                    shownLiElems[0].classList.add('active');
+                } else if (activeIndex < shownLiElems.length - 1) {
+                    shownLiElems[activeIndex].classList.remove('active');
+                    shownLiElems[activeIndex + 1].classList.add('active');
+                } else {
+                    shownLiElems[activeIndex].classList.remove('active');
+                    shownLiElems[0].classList.add('active');
+                }
+            } else {
+                if (activeIndex === -1) {
+                    shownLiElems[shownLiElems.length - 1].classList.add('active');
+                } else if (activeIndex > 0) {
+                    shownLiElems[activeIndex].classList.remove('active');
+                    shownLiElems[activeIndex - 1].classList.add('active');
+                } else {
+                    shownLiElems[activeIndex].classList.remove('active');
+                    shownLiElems[shownLiElems.length - 1].classList.add('active');
+                }
+            }
+        }
     });
 
-    // helpers
+// helpers
     function toggleDropdown() {
         if (dropdownUl.classList.contains('show')) {
-            dropdownUl.classList.remove('show');
+            hideDropdown();
         } else {
             dropdownUl.classList.add('show');
             inputTextElm.select();
         }
     }
+    function hideDropdown() {
+        if (dropdownLiArray.find(liElem => {
+            return liElem.innerText === inputTextElm.value;
+        }) === undefined) {
+            let firstLiElem;
+            if (dropdownUl.classList.contains('show')) {
+                const shownLiElems = dropdownLiArray.filter(liElem => !liElem.hidden);
+                if (shownLiElems.length > 0) {
+                    const activeIndex = shownLiElems.findIndex(liElem => liElem.classList.contains('active'))
+                    if (activeIndex !== -1) {
+                        firstLiElem = shownLiElems[activeIndex];
+
+                    } else {
+                        firstLiElem = shownLiElems[0];
+                    }
+                } else {
+                    firstLiElem = dropdownLiArray[0];
+                }
+            } else {
+                firstLiElem = dropdownLiArray[0];
+            }
+            inputTextElm.value = firstLiElem.innerText;
+            inputHiddenElem.value = firstLiElem.value;
+        }
+        dropdownUl.classList.remove('show');
+        filterDropdown();
+        dropdownLiArray.forEach(liElem => liElem.classList.remove('active'));
+    }
+    function filterDropdown() {
+        dropdownLiArray.forEach(item => item.hidden = false);
+        dropdownLiArray.filter(liElm =>
+            !liElm.innerText.toLowerCase().includes(inputTextElm.value.toLowerCase())
+        ).forEach(item => {
+            dropdownLiArray.find(liElem => liElem.id === item.id).hidden = true;
+        });
+    }
     function chooseValue(liElem) {
         inputTextElm.value = liElem.innerText;
         inputHiddenElem.value = liElem.dataset.value;
+        liElem.classList.add('active');
         dropdownUl.classList.remove('show');
     }
 
     // remove the select element from dom
     selectElem.remove();
-
 }
