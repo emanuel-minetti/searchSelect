@@ -27,6 +27,11 @@ function makeSearchable(selectDiv) {
     dropdownDiv.classList.add('dropdown');
     const dropdownUl = document.createElement('ul');
     dropdownUl.classList.add('dropdown-menu');
+    if (selectDiv.classList.contains('search-select-scroll')) {
+        dropdownUl.style.overflowX = 'hidden';
+        dropdownUl.style.overflowY = 'auto';
+        dropdownUl.style.maxHeight = 'calc(100vh - 150px)';
+    }
     dropdownDiv.insertAdjacentElement('beforeend', dropdownUl);
     selectDiv.insertAdjacentElement('beforeend', dropdownDiv);
     inputTextElm.value = '';
@@ -39,6 +44,9 @@ function makeSearchable(selectDiv) {
         liElem.dataset.value = option.value;
         liElem.innerText = option.innerText;
         liElem.classList.add('dropdown-item');
+        if (option.innerText === '') {
+            liElem.style.minHeight = '2em';
+        }
         dropdownUl.insertAdjacentElement('beforeend', liElem);
         liElem.addEventListener('click', () => {
             chooseValue(liElem);
@@ -103,14 +111,14 @@ function makeSearchable(selectDiv) {
     }
     function hideDropdown() {
         const chosenLiElem = dropdownLiArray.find(liElem => {
-            return liElem.innerText === inputTextElm.value;
+            return liElem.innerText === inputTextElm.value && inputTextElm.value !== '';
         });
         if (chosenLiElem === undefined) {
             let firstLiElem;
             if (dropdownUl.classList.contains('show')) {
                 const shownLiElems = dropdownLiArray.filter(liElem => !liElem.hidden);
                 if (shownLiElems.length > 0) {
-                    const activeIndex = shownLiElems.findIndex(liElem => liElem.classList.contains('active'))
+                    const activeIndex = shownLiElems.findIndex(liElem => liElem.classList.contains('active'));
                     if (activeIndex !== -1) {
                         firstLiElem = shownLiElems[activeIndex];
 
