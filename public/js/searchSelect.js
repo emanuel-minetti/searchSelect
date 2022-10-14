@@ -58,7 +58,7 @@ function makeSearchable(selectDiv) {
     });
 
     // event listeners
-    inputTextElm.addEventListener('click', () => {
+    inputTextElm.addEventListener('focus', () => {
         toggleDropdown();
     });
     document.addEventListener('click', evt => {
