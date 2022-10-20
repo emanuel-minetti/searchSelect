@@ -16,10 +16,12 @@ function makeSearchable(selectDiv) {
     // create the substituting elements, e.g. input and dropdown
     const inputTextElm = document.createElement('input');
     inputTextElm.type = 'text';
+    inputTextElm.id = selectElem.id;
     inputTextElm.classList.add('form-control');
     inputTextElm.autocomplete = 'off';
     selectDiv.insertAdjacentElement('beforeend', inputTextElm);
     const inputHiddenElem = document.createElement('input');
+    inputHiddenElem.id = selectElem.id + 'Value';
     inputHiddenElem.type = 'hidden';
     inputHiddenElem.name = selectElem.name;
     selectDiv.insertAdjacentElement('beforeend', inputHiddenElem);
