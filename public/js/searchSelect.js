@@ -62,6 +62,7 @@ function makeSearchable(selectDiv) {
     // event listeners
     inputTextElm.addEventListener('focus', () => {
         toggleDropdown();
+        filterDropdown();
     });
     document.addEventListener('click', evt => {
         if (!dropdownLiArray.find(liElm => liElm === evt.target || inputTextElm === evt.target)) {
