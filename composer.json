@@ -11,6 +11,6 @@
   ],
   "require": {
     "php": ">=7.3",
-    "twbs/bootstrap": "^v5.0.2"
+    "twbs/bootstrap": "^v5.2"
   }
 }

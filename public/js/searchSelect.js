@@ -134,12 +134,10 @@ function makeSearchable(selectDiv) {
             } else {
                 firstLiElem = dropdownLiArray[0];
             }
-            inputTextElm.value = firstLiElem.innerText;
-            inputHiddenElem.value = firstLiElem.value;
+            chooseValue(firstLiElem);
         } else {
             chooseValue(chosenLiElem);
         }
-        dropdownUl.classList.remove('show');
         filterDropdown();
         dropdownLiArray.forEach(liElem => liElem.classList.remove('active'));
     }
