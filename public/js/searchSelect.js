@@ -153,6 +153,7 @@ function makeSearchable(selectDiv) {
     function chooseValue(liElem) {
         inputTextElm.value = liElem.innerText;
         inputHiddenElem.value = liElem.dataset.value;
+        dropdownLiArray.forEach(liElem => liElem.classList.remove('active'));
         liElem.classList.add('active');
         dropdownUl.classList.remove('show');
     }
