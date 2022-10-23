@@ -9,6 +9,10 @@
  */
 
 function makeSearchable(selectDiv) {
+    // catch related classes
+    const multiple = selectDiv.classList.contains('search-select-multiple');
+    const scrollable = selectDiv.classList.contains('search-select-scroll');
+
     // hide the select element
     const selectElem = selectDiv.getElementsByTagName('select').item(0);
     selectElem.hidden = true;
@@ -29,7 +33,7 @@ function makeSearchable(selectDiv) {
     dropdownDiv.classList.add('dropdown');
     const dropdownUl = document.createElement('ul');
     dropdownUl.classList.add('dropdown-menu');
-    if (selectDiv.classList.contains('search-select-scroll')) {
+    if (scrollable) {
         dropdownUl.style.overflowX = 'hidden';
         dropdownUl.style.overflowY = 'auto';
         dropdownUl.style.maxHeight = 'calc(100vh - 150px)';
@@ -103,7 +107,7 @@ function makeSearchable(selectDiv) {
         }
     });
 
-// helpers
+    // helpers
     function toggleDropdown() {
         if (dropdownUl.classList.contains('show')) {
             hideDropdown();
