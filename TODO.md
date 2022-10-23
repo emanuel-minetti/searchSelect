@@ -1,2 +1,3 @@
 - Comment and document.
+- Add `npm` integration.
 - Adapt for multiple choices.
