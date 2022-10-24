@@ -66,7 +66,9 @@ function makeSearchable(selectDiv) {
     });
     document.addEventListener('click', evt => {
         if (!dropdownLiArray.find(liElm => liElm === evt.target || inputTextElm === evt.target)) {
-            hideDropdown();
+            if (dropdownUl.classList.contains('show')) {
+                hideDropdown();
+            }
         }
     });
     inputTextElm.addEventListener('input', () => {
